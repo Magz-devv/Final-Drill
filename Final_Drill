@@ -1,0 +1,61 @@
+let circleRadius = 50;
+let circleDiameter = 100;
+
+let animationSpeed = 0.04;
+let minRadius = 50;
+let maxRadius = 180;
+
+let isPaused = false;
+
+function setup() {
+  createCanvas(600, 450);
+  textAlign(CENTER, CENTER);
+}
+
+function draw() {
+  background(15, 20, 40);
+
+  if (!isPaused) {
+    circleRadius = map(
+      sin(frameCount * animationSpeed),
+      -1, 1,
+      minRadius, maxRadius
+    );
+  }
+
+  circleDiameter = circleRadius * 2;
+
+  noStroke();
+  fill(0, 180, 255, 180);
+  circle(width / 2, height / 2, circleDiameter);
+
+  noFill();
+  stroke(100, 220, 255);
+  strokeWeight(4);
+  circle(width / 2, height / 2, circleDiameter);
+
+  noStroke();
+  fill(255);
+  textSize(16);
+  text("Radius: " + circleRadius.toFixed(2), width / 2, 350);
+  text("Diameter: " + circleDiameter.toFixed(2), width / 2, 375);
+
+  textSize(13);
+  fill(200);
+  text("SPACE = Pause / Resume", width / 2, 410);
+  text("UP / DOWN = Change Speed", width / 2, 430);
+}
+
+function keyPressed() {
+  if (key === ' ') {
+    isPaused = !isPaused;
+  }
+
+  if (keyCode === UP_ARROW) {
+    animationSpeed += 0.01;
+  }
+
+  if (keyCode === DOWN_ARROW) {
+    animationSpeed = max(0.01, animationSpeed - 0.01);
+  }
+}
